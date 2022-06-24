@@ -1,0 +1,83 @@
+<!--<link href="style.css" rel="stylesheet" type="text/css">-->
+<style>
+    .row {
+        display: flex;
+    }
+
+    .row>div {
+        border: 1px solid #000;
+        width: 100px;
+        height: 100px;
+    }
+
+    .row .cell {
+        position: relative;
+    }
+
+    .row .col1{
+        border-left: none;
+    }
+
+    .row:first-of-type .col1,
+    .row:first-of-type .col2,
+    .row:first-of-type .col3 {
+        border-top: none;
+    }
+
+    .row:last-of-type .col1,
+    .row:last-of-type .col2,
+    .row:last-of-type .col3 {
+        border-bottom: none;
+    }
+
+    .row .col3 {
+        border-right: none;
+    }
+
+    .x-player:after {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        content: "\2716"; /* use the hex value here... */
+        font-size: 50px; 
+        color: #f00;
+        line-height: 100px;
+        text-align: center;
+    }
+
+    .o-player:after {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        content: "\004F"; /* use the hex value here... */
+        font-size: 50px; 
+        color: #f00;
+        line-height: 100px;
+        text-align: center;
+    }
+
+</style>
+
+<div id="game">
+    <div class="row">
+        <div class="col1 cell" data-col="0" data-row="0"></div>
+        <div class="col2 cell" data-col="1" data-row="0"></div>
+        <div class="col3 cell" data-col="2" data-row="0"></div>
+    </div>
+    <div class="row">
+        <div class="col1 cell" data-col="0" data-row="1"></div>
+        <div class="col2 cell" data-col="1" data-row="1"></div>
+        <div class="col3 cell" data-col="2" data-row="1"></div>
+    </div>
+    <div class="row">
+        <div class="col1 cell" data-col="0" data-row="2"></div>
+        <div class="col2 cell" data-col="1" data-row="2"></div>
+        <div class="col3 cell" data-col="2" data-row="2"></div>
+    </div>
+</div>
+
+<script src="tic-tac-toe.js"></script>

@@ -1,0 +1,167 @@
+<!--<link href="/style.css" type="text/css" rel="stylesheet">
+<script src="script.js" type="javascript"></script>-->
+
+<style>
+    #page-content {
+        width: 960px;
+        margin: 0 auto;
+    }
+
+    .flex-box {
+        display: flex;
+        display: -webkit-flex;
+        display: -webkit-box;
+        display: -moz-flex;
+        display: -ms-flexbox;
+    }
+
+    .flex-box div {
+        flex: 1 0 50%;
+    }
+
+    .marg-b-2 {
+        margin-bottom: 2em;
+    }
+
+    #page-content input {
+        width: calc(100% - 15px);
+    }
+
+    .empty-val-label {
+        color: red;
+    }
+
+    .empty-val {
+        border-color: red;
+    }
+</style>
+
+<form action="" method="POST" class="test-form">
+    <div id="page-content">
+        <div class="flex-box marg-b-2">
+            <div>
+                <label for="first-name">
+                    First Name:
+                    <input type="text" name="first-name" class="input-required" id="first-name">
+                </label>
+            </div>
+            <div>
+                <label for="last-name">
+                    Last Name:
+                    <input type="text" name="last-name" class="input-required" id="last-name">
+                </label>
+            </div>
+            
+        </div>
+        <div class="flex-box marg-b-2">
+            <label for="phone-number">
+                Phone Number:
+                <input type="number" name="phone-number" class="input-required" id="phone-number">
+            </label>
+        
+        </div>
+        <div class="marg-b-2">
+            <label for="comments">
+                Comments:
+                <br>
+                <textarea type="text" name="comments" class="input" rows="5"></textarea>
+            </label>
+        </div>
+
+        <div>
+            <input type="submit" value="Submit" id="submit">
+        </div>
+
+    </div>
+    
+</form>
+
+    <div id="results">
+    </div>
+<script>
+
+    //Loop through the inputs that are required
+        // Ensure that there is a value
+        // Validate phone # & email
+        // If !value throw an alert/error msg
+        // If (value) : allow submission/pass a flag that we are good
+        // validate email
+    //2. Submit on click
+    const form  = document.getElementsByTagName('form')[0];
+    let phoneNumber = document.getElementById('phone-number');
+    const phoneFormat = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+
+    function validate() {
+        let inputValueFlag = true;
+        let allInputs = document.querySelectorAll('.input-required');
+        
+
+        for (let x = 0; x < allInputs.length; x++) {
+            console.log(allInputs[x].value);
+            if (!allInputs[x].value) {
+                inputValueFlag = false;
+                allInputs[x].parentNode.className += 'empty-val-label';
+                allInputs[x].className += ' empty-val';
+            } else {
+                inputValueFlag = true;
+                allInputs[x].parentNode.classList.remove('empty-val-label');
+                allInputs[x].classList.remove('empty-val');
+            }
+        }
+
+        if ( phoneNumber.value.length > 0 ) {
+            if ( phoneNumber.value.match(phoneFormat) ) {
+                inputValueFlag = true;
+                phoneNumber.parentNode.classList.remove('empty-val-label');
+                phoneNumber.classList.remove('empty-val');
+            } else {
+                inputValueFlag = false;
+                phoneNumber.parentNode.className += 'empty-val-label';
+                phoneNumber.className += ' empty-val';
+            }
+        }
+
+        if (!inputValueFlag) {
+            
+            if ( !document.getElementById('errorMsg') ) {
+                const errorMsg = document.createElement('p');
+                errorMsg.className += 'errorMsg'
+                errorMsg.id = 'errorMsg';
+                errorMsg.innerText = 'Please fill out required fields';
+                document.getElementById('page-content').prepend(errorMsg);
+            }
+            
+        } else {
+            const form  = document.getElementsByTagName('form')[0];
+            
+            if ( document.getElementById('errorMsg') ) {
+                document.getElementById('errorMsg').remove();
+            }
+            let inputElements = document.getElementsByTagName('input');
+
+            for (let j = 0; j < inputElements.length; j++) {
+                let results = document.getElementById('results');
+                if (j < inputElements.length-1) {
+                    let item = document.createElement('p');
+                    let spanTag = document.createElement('span');
+                    item.id = 'data-'+j;
+                    results.append(item);
+
+                    let dataRow = document.getElementById('data-'+j);
+                    let labelName = inputElements[j].parentNode.textContent.trim();
+                    dataRow.textContent = labelName;
+                    dataRow.appendChild(spanTag);
+
+                    dataRow.getElementsByTagName('span')[0].textContent =' '+ inputElements[j].value;
+
+                }
+                    
+            }
+        }
+    }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        validate();
+    })
+</script>
